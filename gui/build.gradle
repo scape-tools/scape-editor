@@ -1,0 +1,38 @@
+apply plugin: 'application'
+
+dependencies {
+    compile group: 'com.google.code.gson', name: 'gson', version:'2.8.4'
+    // https://mvnrepository.com/artifact/commons-lang/commons-lang
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
+
+    // https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib
+    compile group: 'org.imgscalr', name: 'imgscalr-lib', version: '4.2'
+
+    compile group: 'com.google.guava', name: 'guava', version:'18.0'
+
+    compile files('lib/jfxrt.jar')
+    
+    compile project(':io')
+    compile project(':fs')
+    compile project(':util')
+}
+
+mainClassName = 'scape.editor.gui.App'
+description = 'Scape Editor User-Interface'
+
+defaultTasks 'run'
+
+configurations {
+    jar.archiveName = 'scape-editor.jar'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+

@@ -1,0 +1,11 @@
+
+description = 'Scape Editor RS2 File System'
+
+dependencies {
+  compile project(':io')
+  compile project(':util')
+}
+
+sourceSets {
+  main.java.srcDirs = ['src/main/java', 'src/example/java']
+}

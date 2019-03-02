@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="taskPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClicked" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scape.editor.gui.controller.TaskController">
+    <children>
+        <HBox alignment="CENTER_RIGHT">
+            <children>
+                <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" />
+                    </children>
+                </VBox>
+                <Button fx:id="minBtn" minHeight="20.0" minWidth="45.0" mnemonicParsing="false" onAction="#minimizeProgram">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="maxBtn" minHeight="20.0" minWidth="45.0" mnemonicParsing="false">
+                    <HBox.margin>
+                        <Insets right="5.0" />
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="closeBtn" minHeight="20.0" minWidth="45.0" mnemonicParsing="false" onAction="#closeProgram">
+                    <HBox.margin>
+                        <Insets right="5.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+        <StackPane>
+            <children>
+                <ProgressBar fx:id="progressBar" prefHeight="50.0" prefWidth="300.0" progress="0.0" />
+                <Text fx:id="progressText" strokeType="OUTSIDE" strokeWidth="0.0" />
+            </children>
+        </StackPane>
+    </children>
+</VBox>

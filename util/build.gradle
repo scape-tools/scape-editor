@@ -1,0 +1,6 @@
+
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-compress', version:'1.9'
+}
+
+description = 'Scape Editor Utilities'

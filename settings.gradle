@@ -1,0 +1,11 @@
+rootProject.name = 'scape-editor'
+
+include ':fs'
+include ':gui'
+include ':io'
+include ':util'
+
+project(':fs').projectDir = "$rootDir/fs" as File
+project(':gui').projectDir = "$rootDir/gui" as File
+project(':io').projectDir = "$rootDir/io" as File
+project(':util').projectDir = "$rootDir/util" as File

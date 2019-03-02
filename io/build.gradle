@@ -1,0 +1,5 @@
+description = 'Scape Editor IO'
+
+sourceSets {
+    main.java.srcDirs = ['src/main/kotlin']
+}
