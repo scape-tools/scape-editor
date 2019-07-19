@@ -1,23 +1,29 @@
-apply plugin: 'application'
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
+}
 
 dependencies {
+    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:win"
+    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:linux"
+    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
+
     compile group: 'com.google.code.gson', name: 'gson', version:'2.8.4'
-    // https://mvnrepository.com/artifact/commons-lang/commons-lang
     compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
-
-    // https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib
     compile group: 'org.imgscalr', name: 'imgscalr-lib', version: '4.2'
-
     compile group: 'com.google.guava', name: 'guava', version:'18.0'
-
-    compile files('lib/jfxrt.jar')
-    
+        
     compile project(':io')
     compile project(':fs')
     compile project(':util')
 }
 
-mainClassName = 'scape.editor.gui.App'
+javafx {
+    version = "12.0.1"
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.swing' ]
+}
+
+mainClassName = 'scape.editor.gui.Launcher'
 description = 'Scape Editor User-Interface'
 
 defaultTasks 'run'
@@ -30,9 +36,7 @@ jar {
     manifest {
         attributes 'Main-Class': mainClassName
     }
-
     from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
-

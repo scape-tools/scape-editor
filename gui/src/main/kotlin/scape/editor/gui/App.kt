@@ -39,7 +39,7 @@ class App : Application() {
     }
 
     companion object {
-        val VERSION = "3.0.0"
+        val VERSION = "3.0.1"
 
         val fs = RSFileSystem()
 
