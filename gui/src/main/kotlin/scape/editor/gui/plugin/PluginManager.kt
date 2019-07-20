@@ -17,11 +17,13 @@ object PluginManager {
 
     val jarNameMap = mutableMapOf<IPlugin, String>()
 
-    val eventBus = EventBus()
+    private val eventBus = EventBus()
 
     fun loadPlugins() {
-        val paths = findPlugins()
+        plugins.forEach { eventBus.unregister(it) }
+        plugins.clear()
 
+        val paths = findPlugins()
         for (path in paths) {
             try {
                 val loader = PluginClassLoader(path.toUri().toURL())

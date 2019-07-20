@@ -1,8 +1,10 @@
 package scape.editor.gui.controller
 
+import javafx.application.Platform
 import javafx.collections.FXCollections
 import javafx.collections.transformation.FilteredList
 import javafx.collections.transformation.SortedList
+import javafx.concurrent.Task
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
@@ -13,15 +15,22 @@ import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
 import javafx.scene.image.Image
+import javafx.stage.FileChooser
 import javafx.stage.Stage
 import javafx.stage.StageStyle
+import scape.editor.gui.App
 import scape.editor.gui.model.PluginModel
 import scape.editor.gui.plugin.PluginDescriptor
 import scape.editor.gui.plugin.PluginManager
 import scape.editor.gui.plugin.IPlugin
 import scape.editor.gui.util.FXDialogUtil
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.lang.Exception
 import java.net.URL
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.*
 
 class PluginController : BaseController() {
@@ -66,6 +75,11 @@ class PluginController : BaseController() {
 
         tableView.items = sortedList
 
+        refreshList()
+    }
+
+    private fun refreshList() {
+        data.clear()
         for (plugin in PluginManager.plugins) {
             val annotation = plugin.javaClass.getAnnotation(PluginDescriptor::class.java)
             val model = PluginModel(annotation.name, annotation.version, plugin)
@@ -135,6 +149,51 @@ class PluginController : BaseController() {
         if (instance is IPlugin) {
             open(instance)
         }
+    }
+
+    @FXML
+    fun addPlugin() {
+        val chooser = FileChooser()
+        val filter = FileChooser.ExtensionFilter("Jar files (*.jar)", "*.jar")
+        chooser.title = "Select your plugins to add"
+        chooser.initialDirectory = File("./")
+        chooser.extensionFilters.add(filter)
+
+        val pluginPath = Paths.get(System.getProperty("user.home"), "scape-editor", "plugins")
+
+        if (!Files.exists(pluginPath)) {
+            if (!pluginPath.toFile().mkdirs()) {
+                return
+            }
+        }
+
+        val selectedFiles = chooser.showOpenMultipleDialog(App.mainStage) ?: return
+
+        val task = object: Task<Boolean>() {
+            override fun call(): Boolean {
+
+                for(selectedFile in selectedFiles) {
+                    val destPath = pluginPath.resolve(selectedFile.name).toFile()
+                    FileInputStream(selectedFile).use { input ->
+                        FileOutputStream(destPath).use { out ->
+                            out.write(input.readAllBytes())
+                        }
+                    }
+                }
+
+                PluginManager.loadPlugins()
+
+                Platform.runLater {
+                    refreshList()
+                }
+
+                return true
+            }
+
+        }
+
+        Thread(task).start()
+
     }
 
 }
