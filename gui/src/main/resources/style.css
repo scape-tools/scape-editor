@@ -166,6 +166,14 @@
 	-fx-padding: 10px;
 }
 
+#pluginBtn {
+    -fx-text-fill: gray;
+}
+
+#pluginBtn:hover {
+    -fx-text-fill: white;
+}
+
 .menu-button:hover, .menu-button.showing {
 	-fx-background-color: #292929;
 }
