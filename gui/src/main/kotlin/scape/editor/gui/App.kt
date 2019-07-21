@@ -14,7 +14,6 @@ class App : Application() {
 
     override fun init() {
         Settings.load()
-        PluginManager.loadPlugins()
     }
 
     override fun start(stage: Stage) {

@@ -2,27 +2,20 @@ package scape.editor.gui.plugin
 
 import com.google.common.eventbus.EventBus
 import javafx.fxml.Initializable
+import scape.editor.gui.model.PluginWrapper
 import java.lang.reflect.Modifier
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.jar.JarFile
 
-
 object PluginManager {
 
-    val plugins = mutableSetOf<Any>()
-
-    val classLoaderMap = mutableMapOf<Int, PluginClassLoader>()
-
-    val jarNameMap = mutableMapOf<IPlugin, String>()
+    val plugins = mutableMapOf<String, PluginWrapper>()
 
     private val eventBus = EventBus()
 
     fun loadPlugins() {
-        plugins.forEach { eventBus.unregister(it) }
-        plugins.clear()
-
         val paths = findPlugins()
         for (path in paths) {
             try {
@@ -52,12 +45,11 @@ object PluginManager {
                     val plugin = clazz.newInstance()
 
                     if (plugin is IPlugin) {
-                        jarNameMap[plugin] = jar.name
-                        classLoaderMap[plugin.hashCode()] = loader
+                        val annotation = plugin.javaClass.getAnnotation(PluginDescriptor::class.java)
+                        plugins[path.toString()] = PluginWrapper(plugin, loader, path.toString(), annotation)
+                        register(plugin)
                     }
 
-                    plugins.add(plugin)
-                    eventBus.register(plugin)
                 }
 
             } catch (ex: Exception) {
@@ -74,8 +66,16 @@ object PluginManager {
         val root = Files.createDirectories(Paths.get(System.getProperty("user.home"), "scape-editor"))
         val pluginDir = Files.createDirectories(Paths.get(root.resolve("plugins").toUri()))
 
-        Files.walk(pluginDir).filter { it -> it.fileName.toString().contains(".jar")}.distinct().forEach { set.add(it)}
+        Files.walk(pluginDir).filter { it.fileName.toString().contains(".jar")}.distinct().forEach { set.add(it)}
         return set
+    }
+
+    fun register(plugin: IPlugin) {
+        this.eventBus.register(plugin)
+    }
+
+    fun unregister(plugin: IPlugin) {
+        this.eventBus.unregister(plugin)
     }
 
     fun post(event: Any) {
