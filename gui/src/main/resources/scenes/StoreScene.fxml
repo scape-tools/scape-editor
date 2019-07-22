@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClicked" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" prefHeight="400.0" prefWidth="600.0" styleClass="cod-gray" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scape.editor.gui.controller.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClicked" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" prefHeight="475.0" prefWidth="800.0" styleClass="cod-gray" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scape.editor.gui.controller.MainController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -76,8 +76,8 @@
             <TableView fx:id="storeTable" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="storeIconCol" editable="false" maxWidth="36.0" minWidth="36.0" prefWidth="-1.0" sortable="false" />
-                <TableColumn fx:id="storeNameCol" maxWidth="191.0" minWidth="95.0" prefWidth="176.0" text="Name" />
-                  <TableColumn fx:id="storeIndexCol" maxWidth="65.0" minWidth="17.0" prefWidth="38.0" text="Index" />
+                <TableColumn fx:id="storeNameCol" maxWidth="191.0" minWidth="95.0" prefWidth="160.0" text="Name" />
+                  <TableColumn fx:id="storeIndexCol" maxWidth="65.0" minWidth="17.0" prefWidth="62.0" text="Index" />
               </columns>
                <VBox.margin>
                   <Insets left="5.0" right="5.0" top="5.0" />
@@ -110,10 +110,10 @@
          <children>
             <TableView fx:id="storeEntryTable" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="storeEntryIconCol" maxWidth="-1.0" minWidth="32.0" prefWidth="32.0" text="Icon" />
+                <TableColumn fx:id="storeEntryIconCol" maxWidth="-1.0" minWidth="64.0" prefWidth="64.0" />
                 <TableColumn fx:id="storeEntryFileCol" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" text="File" />
-                  <TableColumn fx:id="storeEntryNameCol" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" text="Name" />
-                  <TableColumn fx:id="storeEntrySizeCol" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" text="Size" />
+                  <TableColumn fx:id="storeEntryNameCol" maxWidth="296.0" minWidth="100.0" prefWidth="234.0" text="Name" />
+                  <TableColumn fx:id="storeEntrySizeCol" maxWidth="242.0" minWidth="100.0" prefWidth="-1.0" text="Size" />
               </columns>
                <VBox.margin>
                   <Insets right="5.0" top="5.0" />
